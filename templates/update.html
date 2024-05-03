@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% if 'delete' not in message %}
+            <strong>Hey {{name}} - {{ message }}</strong>
+        {% else %}
+            <strong>{{ message }}</strong>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <div>
+        <h1 class="text-center">Edit Todo</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                <label for="title" class="form-label">{{ form.title.label }}</label>
+                {{ form.title(class="form-control", size=32) }}
+                {% for error in form.title.errors %}
+                    <span style="color: red;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Update Todo</button>
+        </form>
+    </div>
+    </div>
+    {% endblock %}
+

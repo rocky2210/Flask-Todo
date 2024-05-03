@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% if 'delete' not in message %}
+            <strong>Hey {{name}} - {{ message }}</strong>
+        {% else %}
+            <strong>{{ message }}</strong>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+    <div class="container d-flex justify-content-center align-items-center">
+        <div>
+            <h1 class="text-center">Todo List</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.title.label }}
+                    {{ form.title(class="form-control", size=32) }}
+                    {% for error in form.title.errors %}
+                        <span style="color: red;">{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary add-todo-btn">Add Todo</button>
+                </div>
+            </form>
+
+            <ul class="list-group mt-3">
+                {% for todo in todos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ todo.title }}
+                        <div class="btn-group" role="group">
+                            <form method="POST" action="{{ url_for('delete_todo', todo_id=todo.id) }}">
+                                <button type="submit" class="btn btn-danger me-2">🗑️</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
+                                <button type="submit" class="btn btn-warning me-2">🖊️</button>
+                            </form>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

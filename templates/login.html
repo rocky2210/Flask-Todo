@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% if 'delete' not in message %}
+            <strong>Hey {{name}} - {{ message }}</strong>
+        {% else %}
+            <strong>{{ message }}</strong>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="h3 mb-3 text-center">Please sign in</h1>
+            <div class="text-center">
+                <img class="mb-4" src="{{ url_for('static',filename='images/default.png')}}" alt="" width="80" height="80">
+            </div>
+            <form method="POST" class="form-signin d-flex flex-column align-items-center">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label">{{ form.username.label }}</label>
+                    {{ form.username(class="form-control") }}
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control") }}
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-lg btn-primary py-2" type="submit">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

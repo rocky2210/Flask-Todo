@@ -1,0 +1,11 @@
+.add-todo-btn {
+    width: 120px;
+}
+/* Adjust input width */
+.form-control {
+    width: 350px; 
+}
+.list-group-item{
+    width: 350px; 
+
+}
