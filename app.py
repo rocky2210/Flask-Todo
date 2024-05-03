@@ -82,19 +82,27 @@ class EditTodoForm(FlaskForm):
 
 
 # Add Todo Route
-@app.route('/todo',methods=['GET','POST'])
+@app.route('/add_todo',methods=['GET','POST'])
 @login_required
-def todo():
+def add_todo():
     form = TodoForm()
     if form.validate_on_submit():
         todo = Todo(title=form.title.data, user_id=current_user.id)
         db.session.add(todo)
         db.session.commit()
         flash('Todo added Successfully','success')
-        return redirect(url_for('todo'))
+        return redirect(url_for('todos'))
     
+    return render_template('add_todo.html',form=form)
+
+# Todo Route
+@app.route('/todos')
+@login_required
+def todos():
     todos = Todo.query.filter_by(user_id=current_user.id).all()
-    return render_template('todo.html',form=form, todos=todos )
+    name = current_user.username
+    return render_template('todos.html',todos=todos,name=name )
+
 
 # Delete todo
 @app.route('/delete_todo/<int:todo_id>', methods=['POST'])
@@ -105,7 +113,7 @@ def delete_todo(todo_id):
         db.session.delete(todo)
         db.session.commit()
         flash("Todo deleted Successfully",'success')
-    return redirect(url_for('todo'))
+    return redirect(url_for('todos'))
 
 
 #Edit Todo Route
@@ -121,7 +129,7 @@ def edit_todo(todo_id):
         todo.title = form.title.data
         db.session.commit()
         flash('Todo updated successfully', 'success')
-        return redirect(url_for('todo'))
+        return redirect(url_for('todos'))
     return render_template('update.html', form=form)
 
 # Login Route
@@ -135,7 +143,7 @@ def login():
             if check_password_hash(user.password_hash,form.password.data):
                 login_user(user)
                 flash("Login Successfully")
-                return redirect(url_for('todo'))
+                return redirect(url_for('todos'))
             else:
                 flash("Wrong Password - Try Again")
         else:
