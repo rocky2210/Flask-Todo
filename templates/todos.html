@@ -18,21 +18,25 @@
 <div class="container d-flex justify-content-center align-items-center">
     <div>
     <p class="text-center">TODO'S</p>
+                {% if not todos %}
+                <p class="h3">No todo </p>
+                {% else %}
             <ul class="list-group mt-3 gap-2">
                 {% for todo in todos %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-center todo_border">
                         {{ todo.title }}
                         <div class="btn-group" role="group">
                             <form method="POST" action="{{ url_for('delete_todo', todo_id=todo.id) }}">
-                                <button type="submit" class="btn btn-danger me-2">🗑️</button>
+                                <button type="submit" class="btn me-2"><img class="" src="{{ url_for('static',filename='images/icons8-trash.svg')}}" alt="" width="25" height="25"></button>
                             </form>
                             <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
-                                <button type="submit" class="btn btn-warning me-2">🖊️</button>
+                                <button type="submit" class="btn me-2"><img width="25" height="25" src="{{ url_for('static',filename='images/icons8-edit.svg')}}" alt="edit"/></button>
                             </form>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

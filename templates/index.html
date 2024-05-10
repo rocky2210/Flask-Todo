@@ -13,10 +13,25 @@
     </div>
 {% endfor %}
 
-    <h1>Welcome to Your Todo List Application</h1>
-    {% if current_user.is_authenticated %}
-    <a class="btn btn-primary" href="{{url_for('todos')}}">Todos</a>
-    {% else %}
-    <p><a href="{{ url_for('login') }}">Login</a> or <a href="{{ url_for('register') }}">Register</a></p>
-    {% endif %}
+    <div class="container my-5">
+        <div class="p-5 text-center bg-body-tertiary rounded-3">
+            
+            <img width="94" height="94" src="https://img.icons8.com/3d-fluency/94/bookmark.png" alt="bookmark"/>
+            <!-- <img class="mb-2" src="{{ url_for('static',filename='images/notebook.png')}}" alt="" width="80" height="80"> -->
+            
+            <h1 class="text-body-emphasis">Flask TODO</h1>
+            <p class="col-lg-8 mx-auto fs-5 text-muted">
+                Welcome to Your Todo List Application</p>
+            {% if current_user.is_authenticated %}
+            <div class="d-inline-flex gap-2 mb-5">
+                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" href="{{url_for('todos')}}">Todos</a>
+                {% else %}
+                <a class="btn btn-1" href="{{ url_for('login') }}">Login</a>
+                <a class="btn btn-1" href="{{ url_for('register') }}">Register</a>
+            </div>
+        {% endif %}
+
+        </div>
+        </div>
+
 {% endblock %}
