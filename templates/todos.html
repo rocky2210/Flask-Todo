@@ -15,6 +15,9 @@
     </div>
 {% endfor %}
 
+
+
+
 <div class="container d-flex justify-content-center align-items-center">
     <div>
     <p class="text-center">TODO'S</p>
@@ -38,5 +41,9 @@
             </ul>
             {% endif %}
         </div>
+    </div>
+
+    <div class="plus-button-container">
+        <a href="{{ url_for('add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
     </div>
 {% endblock %}

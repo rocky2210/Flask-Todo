@@ -60,3 +60,21 @@ html {
 .todo_border{
       border: 1px solid #4dccc6 !important;
 }
+
+
+
+/* Add floating button */
+
+.plus-button-container {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.plus-button {
+  background-color: #6610f2 !important;
+  font-size: 24px;
+  border-radius: 50%;
+  text-align: center;
+}
