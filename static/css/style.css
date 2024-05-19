@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
+:root{
+  /* --bs-body-bg : #434A54 !important; */
+  --bs-body-font-family: "Poetsen One", sans-serif !important;
+  
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --border-color: #333333;
+      --accordion-bg-color: #262626;
+      --accordion-header-bg-color: #333333;
+      --accordion-header-hover-bg-color: #444444;
+      --accordion-body-bg-color: #1a1a1a;
+  }
+}
+
 .add-todo-btn {
     width: 120px;
 }
@@ -69,7 +90,7 @@ html {
   position: fixed;
   bottom: 110px;
   right: 20px;
-  z-index: 1000; /* Ensure it appears above other content */
+  z-index: 1000; 
 }
 
 .plus-button {
@@ -77,4 +98,69 @@ html {
   font-size: 24px;
   border-radius: 50%;
   text-align: center;
+}
+
+
+.accordion {
+  width: 70%;
+  margin: 0 auto; /* Center the accordion within the container */
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: var(--accordion-bg-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+
+.accordion-header {
+  background-color: var(--accordion-header-bg-color);
+  cursor: pointer;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
+}
+.accordion-header:hover {
+  background-color: var(--accordion-header-hover-bg-color);
+}
+.accordion-body {
+  display: none;
+  padding: 15px;
+  background-color: var(--accordion-body-bg-color);
+  transition: background-color 0.3s ease;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.btn-group form {
+  display: inline-block;
+}
+.btn img {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .accordion {
+    width: 90%; /* Set a larger width for mobile devices */
+  }
+
+  .btn-group {
+    gap: 0px;
+  }
+}
+
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+
+
+.animate__animated.animate__bounceIn {
+  --animate-duration: 500ms;
 }

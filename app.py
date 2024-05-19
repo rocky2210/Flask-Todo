@@ -3,8 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, SubmitField
+from wtforms import StringField, PasswordField, EmailField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from flask_migrate import Migrate
 
 # Create a Flask instance
 app = Flask(__name__)
@@ -18,7 +19,7 @@ app.config['SECRET_KEY'] = "Thisismysecretkey"
 
 # Initialize the database
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 # Configure Flask-Login
 login_manager = LoginManager()
@@ -43,6 +44,8 @@ class User(UserMixin,db.Model):
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(250))
+    completed = db.Column(db.Boolean,default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
@@ -72,12 +75,14 @@ class RegistrationForm(FlaskForm):
 # Todo Form
 class TodoForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', render_kw={"rows": 5}) 
     submit = SubmitField('Add Todo')
 
 
 # Edit Form
 class EditTodoForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', render_kw={"rows": 5}) 
     submit = SubmitField('Update Todo')
 
 
@@ -87,7 +92,7 @@ class EditTodoForm(FlaskForm):
 def add_todo():
     form = TodoForm()
     if form.validate_on_submit():
-        todo = Todo(title=form.title.data, user_id=current_user.id)
+        todo = Todo(title=form.title.data,description=form.description.data, user_id=current_user.id)
         db.session.add(todo)
         db.session.commit()
         flash('Todo added Successfully','success')
@@ -112,7 +117,7 @@ def delete_todo(todo_id):
     if todo:
         db.session.delete(todo)
         db.session.commit()
-        flash("Todo deleted Successfully",'success')
+        flash("Todo deleted Successfully",'danger')
     return redirect(url_for('todos'))
 
 
@@ -127,9 +132,12 @@ def edit_todo(todo_id):
     form = EditTodoForm(obj=todo)
     if form.validate_on_submit():
         todo.title = form.title.data
+        todo.description = form.description.data
         db.session.commit()
         flash('Todo updated successfully', 'success')
         return redirect(url_for('todos'))
+    else :
+        flash('Some issues', 'danger')
     return render_template('update.html', form=form)
 
 # Login Route
@@ -170,6 +178,23 @@ def logout():
     logout_user()
     flash("Logout successfully")
     return redirect(url_for('login'))
+
+
+# Completed route
+@app.route('/complete_todo/<int:todo_id>', methods=['POST'])
+@login_required
+def complete_todo(todo_id):
+    todo = Todo.query.get(todo_id)
+    if todo and todo.user_id == current_user.id:
+        if todo.completed:
+            todo.completed = False
+            flash("Todo marked as incomplete", 'warning')
+        else:
+            todo.completed = True
+            flash("Todo marked as completed", 'success')
+        db.session.commit()
+    return redirect(url_for('todos'))
+
 
 @app.route('/')
 def index():

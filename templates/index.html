@@ -33,8 +33,10 @@
 
         </div>
         </div>
+        {% if current_user.is_authenticated%}
         <div class="plus-button-container">
             <a href="{{ url_for('add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
         </div>
+        {% endif %}
 
 {% endblock %}

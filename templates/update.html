@@ -19,8 +19,10 @@
         <form method="POST">
             {{ form.hidden_tag() }}
             <div class="mb-3">
-                <label for="title" class="form-label">{{ form.title.label }}</label>
+                {{ form.title.label }}
                 {{ form.title(class="form-control", size=32) }}
+                {{ form.description.label }}
+                <pre>{{ form.description(class="form-control mb-3",rows=5) }}</pre>
                 {% for error in form.title.errors %}
                     <span style="color: red;">{{ error }}</span><br>
                 {% endfor %}

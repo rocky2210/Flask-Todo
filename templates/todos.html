@@ -2,46 +2,76 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-    {% if 'delete' in message %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {% elif 'update' in message %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {% else %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible animate__animated animate__bounceIn" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
     {% endif %}
-        <strong>{{ message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% endfor %}
+{% endwith %}
 
 
-
-
-<div class="container d-flex justify-content-center align-items-center">
-    <div>
-    <p class="text-center">TODO'S</p>
-                {% if not todos %}
-                <p class="h3">No todo </p>
-                {% else %}
-            <ul class="list-group mt-3 gap-2">
-                {% for todo in todos %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center todo_border">
-                        {{ todo.title }}
-                        <div class="btn-group" role="group">
-                            <form method="POST" action="{{ url_for('delete_todo', todo_id=todo.id) }}">
-                                <button type="submit" class="btn me-2"><img class="" src="{{ url_for('static',filename='images/icons8-trash.svg')}}" alt="" width="25" height="25"></button>
-                            </form>
-                            <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
-                                <button type="submit" class="btn me-2"><img width="25" height="25" src="{{ url_for('static',filename='images/icons8-edit.svg')}}" alt="edit"/></button>
-                            </form>
+<div class="container">
+    <p class="text-center h3">TODO'S</p>
+    {% if not todos %}
+    <p class="h3 text-center">No todo</p>
+    {% else %}
+        {% for todo in todos %}
+        <div class="accordion">
+            <div class="accordion-header {% if todo.completed %}completed{% endif %}" id="heading{{ loop.index }}">
+                <span>{{ todo.title }}</span>
+                <div class="btn-group">
+                    <form method="POST" action="{{ url_for('complete_todo', todo_id=todo.id) }}">
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="checkbox" name="completed" id="completeCheck{{ todo.id }}" onclick="this.form.submit();" {% if todo.completed %}checked {% endif %}>
                         </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+                    </form>
+                    <form method="POST" action="{{ url_for('delete_todo', todo_id=todo.id) }}">
+                        <button type="submit" class="btn btn-sm">
+                            <img src="{{ url_for('static', filename='images/icons8-trash.svg') }}" alt="delete">
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
+                        <button type="submit" class="btn btn-sm">
+                            <img src="{{ url_for('static', filename='images/icons8-edit.svg') }}" alt="edit">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div id="collapse{{ loop.index }}" class="accordion-body">
+                <pre>{{ todo.description }}</pre>
+            </div>
         </div>
-    </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const headers = document.querySelectorAll('.accordion-header');
+        headers.forEach(header => {
+            header.addEventListener('click', function() {
+                const body = this.nextElementSibling;
+                const isOpen = body.style.display === 'block';
+                body.style.display = isOpen ? 'none' : 'block';
+            });
+        });
+
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.classList.remove('animate__bounceIn');
+                alert.classList.add('animate__backOutLeft');
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 1000);
+            }, 4500);
+        });
+    });
+</script>
+
 
     <div class="plus-button-container">
         <a href="{{ url_for('add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>

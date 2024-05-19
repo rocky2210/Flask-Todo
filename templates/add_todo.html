@@ -23,6 +23,8 @@
                 <div class="mb-3">
                     {{ form.title.label }}
                     {{ form.title(class="form-control", size=32) }}
+                    {{ form.description.label }}
+                    {{ form.description(class="form-control mb-3",rows=5) }}
                     {% for error in form.title.errors %}
                         <span style="color: red;">{{ error }}</span><br>
                     {% endfor %}
