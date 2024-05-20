@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
@@ -18,7 +18,7 @@
     <div class="container d-flex justify-content-center align-items-center">
         <div>
             <h1 class="text-center">Todo List</h1>
-            <form method="POST">
+            <form method="POST" action="{{url_for('main.add_todo')}}">
                 {{ form.hidden_tag() }}
                 <div class="mb-3">
                     {{ form.title.label }}
@@ -29,6 +29,16 @@
                         <span style="color: red;">{{ error }}</span><br>
                     {% endfor %}
                 </div>
+
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select class="form-select" id="priority" name="priority">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+
                 <div class="text-center">
                     <button type="submit" class="bubbly-button add-todo-btn">Add Todo</button>
                 </div>

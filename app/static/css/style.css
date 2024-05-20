@@ -164,3 +164,97 @@ html {
 .animate__animated.animate__bounceIn {
   --animate-duration: 500ms;
 }
+
+
+
+.pulsating-circle {
+  height: 15px;
+  width: 15px;
+  margin-right: 18px;
+  border-radius: 50%;
+  animation: 1.5s pulse infinite ease-in-out;
+}
+
+/* High priority badge */
+.pulsating-circle.high {
+  background-color: #dc3545; /* Red */
+}
+
+.pulsating-circle.high::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border-radius: 50%;
+  background-color: #dc3545;
+  margin-top: 7px;
+  height: 15px;
+  width: 15px;
+  box-shadow: 0 0 0 0 #dc3545;
+  animation: 1.5s pulse-red infinite ease-in-out;
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 #dc3545;
+  }
+  100% {
+    box-shadow: 0 0 0 14px #dc354500;
+  }
+}
+
+/* Medium priority badge */
+.pulsating-circle.medium {
+  background-color: #ffc107; /* Yellow */
+}
+
+.pulsating-circle.medium::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background-color: #ffc107;
+  margin-top: 7px;
+  height: 15px;
+  width: 15px;
+  box-shadow: 0 0 0 0 #ffc107;
+  animation: 1.5s pulse-yellow infinite ease-in-out;
+}
+
+@keyframes pulse-yellow {
+  0% {
+    box-shadow: 0 0 0 0 #ffc107;
+  }
+  100% {
+    box-shadow: 0 0 0 14px #ffc10700;
+  }
+}
+
+/* Low priority badge */
+.pulsating-circle.low {
+  background-color: #6c757d; /* Grey */
+}
+
+.pulsating-circle.low::before {
+  content: '';
+  position: absolute;
+  background-color: #6c757d;
+  margin-top: 7px;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  box-shadow: 0 0 0 0 #6c757d;
+  animation: 1.5s pulse-grey infinite ease-in-out;
+}
+
+@keyframes pulse-grey {
+  0% {
+    box-shadow: 0 0 0 0 #6c757d;
+  }
+  100% {
+    box-shadow: 0 0 0 14px #6c757d00;
+  }
+}
+
+.todo-title {
+  margin-left: 1em;
+  flex-grow: 1;
+}

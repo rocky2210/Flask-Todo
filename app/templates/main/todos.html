@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
@@ -22,19 +22,29 @@
         {% for todo in todos %}
         <div class="accordion">
             <div class="accordion-header {% if todo.completed %}completed{% endif %}" id="heading{{ loop.index }}">
-                <span>{{ todo.title }}</span>
+                <div id="collapse{{ loop.index }}" >
+                    {% if todo.priority == 'high' %}
+                        <span class="pulsating-circle high"></span>
+                    {% elif todo.priority == 'medium' %}
+                        <span class="pulsating-circle medium"></span>
+                    {% elif todo.priority == 'low' %}
+                        <span class="pulsating-circle low"></span>
+                    {% endif %}
+                    </div>
+                <span class="todo-title">{{ todo.title }}</span>
+
                 <div class="btn-group">
-                    <form method="POST" action="{{ url_for('complete_todo', todo_id=todo.id) }}">
+                    <form method="POST" action="{{ url_for('main.complete_todo', todo_id=todo.id) }}">
                         <div class="form-check mt-1">
                             <input class="form-check-input" type="checkbox" name="completed" id="completeCheck{{ todo.id }}" onclick="this.form.submit();" {% if todo.completed %}checked {% endif %}>
                         </div>
                     </form>
-                    <form method="POST" action="{{ url_for('delete_todo', todo_id=todo.id) }}">
+                    <form method="POST" action="{{ url_for('main.delete_todo', todo_id=todo.id) }}">
                         <button type="submit" class="btn btn-sm">
                             <img src="{{ url_for('static', filename='images/icons8-trash.svg') }}" alt="delete">
                         </button>
                     </form>
-                    <form method="POST" action="{{ url_for('edit_todo', todo_id=todo.id) }}">
+                    <form method="POST" action="{{ url_for('main.edit_todo', todo_id=todo.id) }}">
                         <button type="submit" class="btn btn-sm">
                             <img src="{{ url_for('static', filename='images/icons8-edit.svg') }}" alt="edit">
                         </button>
@@ -43,6 +53,13 @@
             </div>
             <div id="collapse{{ loop.index }}" class="accordion-body">
                 <pre>{{ todo.description }}</pre>
+                {% if todo.priority == 'high' %}
+                    <span class="badge bg-danger text-dark">High</span>
+                {% elif todo.priority == 'medium' %}
+                    <span class="badge bg-warning text-dark">Medium</span>
+                {% elif todo.priority == 'low' %}
+                    <span class="badge bg-secondary text-dark">Low</span>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -74,6 +91,6 @@
 
 
     <div class="plus-button-container">
-        <a href="{{ url_for('add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
+        <a href="{{ url_for('main.add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
@@ -24,10 +24,10 @@
                 Welcome to Your Todo List Application</p>
             {% if current_user.is_authenticated %}
             <div class="d-inline-flex gap-2 mb-5">
-                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" href="{{url_for('todos')}}">Todos</a>
+                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" href="{{url_for('main.todos')}}">Todos</a>
                 {% else %}
-                <a class="btn btn-1" href="{{ url_for('login') }}">Login</a>
-                <a class="btn btn-1" href="{{ url_for('register') }}">Register</a>
+                <a class="btn btn-1" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="btn btn-1" href="{{ url_for('auth.register') }}">Register</a>
             </div>
         {% endif %}
 
@@ -35,7 +35,7 @@
         </div>
         {% if current_user.is_authenticated%}
         <div class="plus-button-container">
-            <a href="{{ url_for('add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
+            <a href="{{ url_for('main.add_todo') }}" class="btn plus-button"><i class="bi bi-plus-lg"></i></a>
         </div>
         {% endif %}
 

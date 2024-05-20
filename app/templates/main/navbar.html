@@ -2,7 +2,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-body-tertiary" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('index')}}">Flask TODO 📚</a>
+      <a class="navbar-brand" href="{{ url_for('main.index')}}">Flask TODO 📚</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,24 +14,24 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 gap-3 pe-1">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Home 🏠</a>
+              <a class="nav-link active" aria-current="page" href="{{url_for('main.index')}}">Home 🏠</a>
             </li>
             {% if current_user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link active" href="{{url_for('todos')}}">Todo 📃</a>
+                <a class="nav-link active" href="{{url_for('main.todos')}}">Todo 📃</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{{url_for('add_todo')}}"> Add Todo 📝</a>
+                <a class="nav-link active" href="{{url_for('main.add_todo')}}"> Add Todo 📝</a>
               </li>
             <li class="nav-item">
-                <a class="btn btn-danger" href="{{url_for('logout')}}">Logout </a>
+                <a class="btn btn-danger" href="{{url_for('auth.logout')}}">Logout </a>
               </li>
             {% else %}
             <li class="nav-item">
-                <a class=" btn btn-success" href="{{url_for('register')}}">Create Account 🖊️</a>
+                <a class=" btn btn-success" href="{{url_for('auth.register')}}">Create Account 🖊️</a>
               </li>
             <li class="nav-item">
-              <a class=" btn btn-primary" href="{{url_for('login')}}">Login</a>
+              <a class=" btn btn-primary" href="{{url_for('auth.login')}}">Login</a>
             </li>
             {% endif%}
           </ul>
