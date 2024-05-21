@@ -52,7 +52,11 @@
                 </div>
             </div>
             <div id="collapse{{ loop.index }}" class="accordion-body">
+                {% if todo.due_date %}
+                <p class="text-end text-info" style="font-size: 14px;">Due Date: {{ todo.due_date.strftime('%d-%m-%Y') }}</p>
+                {% endif %}
                 <pre>{{ todo.description }}</pre>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
                 {% if todo.priority == 'high' %}
                     <span class="badge bg-danger text-dark">High</span>
                 {% elif todo.priority == 'medium' %}
@@ -60,6 +64,10 @@
                 {% elif todo.priority == 'low' %}
                     <span class="badge bg-secondary text-dark">Low</span>
                 {% endif %}
+                    <p class="text-end mt-3 text-secondary">Created At: {{todo.created_at.strftime('%d-%m-%Y') }}</p>
+
+                </div>
+
             </div>
         </div>
         {% endfor %}

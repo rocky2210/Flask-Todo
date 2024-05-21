@@ -3,7 +3,8 @@ import os
 class Config:
     
     # Add mysql database configuration
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://root:@localhost/flasktodo' # Database configuration
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://root:@localhost/todo' # Database configuration
+    
     # Disable tracking modifications to save resources
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     

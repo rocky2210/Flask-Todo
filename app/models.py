@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import db
+from datetime import datetime
 
 # User model
 class User(UserMixin,db.Model):
@@ -23,4 +24,6 @@ class Todo(db.Model):
     description = db.Column(db.String(250))
     completed = db.Column(db.Boolean,default=False)
     priority = db.Column(db.String(10), nullable=True)
+    created_at = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    due_date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

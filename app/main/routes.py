@@ -38,7 +38,8 @@ def add_todo():
         todo = Todo(
             title=form.title.data,
             description=form.description.data,
-            priority=priority, 
+            priority=priority,
+            due_date=form.due_date.data, 
             user_id=current_user.id
             )
         db.session.add(todo)
