@@ -16,16 +16,19 @@
 
 <div class="container">
     <h1>Your Notes</h1>
-    <a href="{{ url_for('note.add_note') }}" class="btn btn-primary">Add Note</a>
+    <a href="{{ url_for('note.add_note') }}" class="btn btn-primary btn-1">Add Note</a>
     {% if notes %}
         <div class="row mt-3">
             {% for note in notes %}
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                     <div class="card h-150">
                         <div class="card-body">
-                            <h5 class="card-title" style="font-family: Arial, Helvetica, sans-serif;">{{ note.title }}</h5>
-                            <p class="card-text mt-5" style="font-family: Arial, Helvetica, sans-serif;">{{ note.content[:100] | safe }}{% if note.content|length > 100 %}...{% endif %}</p>
-                            <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="btn btn-primary mt-3">Read More</a>
+                            <h5 class="card-title mb-2" style="font-family: Arial, Helvetica, sans-serif;">{{ note.title }}</h5><hr>
+                            <p class="card-text mt-3" style="font-family: Arial, Helvetica, sans-serif;">{{ note.content[:100] | safe }}{% if note.content|length > 100 %}...{% endif %}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
+                                <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="btn btn-primary mt-3 btn-3">Read More</a>
+                                <p class="text-end mt-4 text-secondary">Created At: {{note.created_at.strftime('%d-%m-%Y') }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

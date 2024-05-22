@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
 
 :root{
-  /* --bs-body-bg : #434A54 !important; */
+  --hue: 254;
+  --bs-body-bg : hsl(var(--hue), 12%, 6%) !important;
   --bs-body-font-family: "Poetsen One", sans-serif !important;
-  
+  --bg-body-tertiary: #0d0d0d  !important; 
+  --bs-tertiary-bg-rgb: #171717 !important ;
+
 }
+
+
+
+
+
+
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
@@ -12,8 +21,8 @@
       --bg-color: #1a1a1a;
       --text-color: #ffffff;
       --border-color: #333333;
-      --accordion-bg-color: #262626;
-      --accordion-header-bg-color: #333333;
+      --accordion-bg-color: #2f2f2f;
+      --accordion-header-bg-color: #0d0d0d;
       --accordion-header-hover-bg-color: #444444;
       --accordion-body-bg-color: #1a1a1a;
   }
@@ -75,6 +84,42 @@ html {
     background: rgb(0,3,255);
     background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
 }
+
+.btn-2 {
+  background: rgb(255, 0, 0); 
+  background: linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(255, 64, 64, 1) 100%); 
+  border: none;
+}
+
+.btn-2:hover {
+  background: rgb(160, 0, 0);
+  background: linear-gradient(0deg, rgba(160, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 100%); 
+}
+
+
+.btn-3 {
+  background: rgb(1, 116, 1); 
+  background: linear-gradient(0deg, rgba(0, 128, 0, 1) 0%, rgba(0, 255, 0, 0.708) 100%);
+  border: none;
+}
+
+.btn-3:hover {
+  background: rgb(0, 64, 0); 
+  background: linear-gradient(0deg, rgba(0, 64, 0, 1) 0%, rgba(0, 128, 0, 1) 100%);
+}
+
+.btn-4 {
+  background: rgb(255, 204, 0);
+  background: linear-gradient(0deg, rgba(255, 204, 0, 1) 0%, rgba(255, 255, 0, 0.793) 100%); 
+  border: none;
+}
+
+.btn-4:hover {
+  background: rgb(153, 102, 0); 
+  background: linear-gradient(0deg, rgba(153, 102, 0, 1) 0%, rgba(255, 204, 0, 1) 100%);
+}
+
+
 
 
 /* Todos border */

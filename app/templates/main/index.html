@@ -2,16 +2,16 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {% if 'delete' not in message %}
-            <strong>Hey {{name}} - {{ message }}</strong>
-        {% else %}
-            <strong>{{ message }}</strong>
-        {% endif %}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% endfor %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible animate__animated animate__bounceIn" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
     <div class="container my-5">
         <div class="p-5 text-center bg-body-tertiary rounded-3">
@@ -24,8 +24,8 @@
                 Welcome to Your Todo List Application</p>
             {% if current_user.is_authenticated %}
             <div class="d-inline-flex gap-2 mb-5">
-                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" href="{{url_for('todo.todos')}}">Todos</a>
-                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" href="{{url_for('note.notes')}}">Notes</a>
+                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill btn-1" href="{{url_for('todo.todos')}}">Todos</a>
+                <a class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill btn-1" href="{{url_for('note.notes')}}">Notes</a>
                 {% else %}
                 <a class="btn btn-1" href="{{ url_for('auth.login') }}">Login</a>
                 <a class="btn btn-1" href="{{ url_for('auth.register') }}">Register</a>
@@ -34,5 +34,27 @@
 
         </div>
         </div>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const headers = document.querySelectorAll('.accordion-header');
+                headers.forEach(header => {
+                    header.addEventListener('click', function() {
+                        const body = this.nextElementSibling;
+                        const isOpen = body.style.display === 'block';
+                        body.style.display = isOpen ? 'none' : 'block';
+                    });
+                });
+        
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => {
+                    setTimeout(() => {
+                        alert.classList.remove('animate__bounceIn');
+                        alert.classList.add('animate__backOutLeft');
+                        setTimeout(() => {
+                            alert.style.display = 'none';
+                        }, 1000);
+                    }, 4500);
+                });
+            });
+        </script>
 {% endblock %}
