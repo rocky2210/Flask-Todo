@@ -36,6 +36,10 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     
     # Registering the note blueprint
+    from app.todo import bp as todo_bp
+    app.register_blueprint(todo_bp,url_prefix='/todo')
+    
+    # Registering the note blueprint
     from app.note import bp as note_bp
     app.register_blueprint(note_bp,url_prefix='/note')
     
