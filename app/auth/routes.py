@@ -16,7 +16,7 @@ def login():
             if user and user.check_password(form.password.data):
                 login_user(user)
                 flash("Login Successfully","success")
-                return redirect(url_for('main.todos'))
+                return redirect(url_for('main.index'))
             else:
                 flash("Wrong Password - Try Again","danger")
         else:

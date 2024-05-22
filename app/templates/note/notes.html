@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible animate__animated animate__bounceIn" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+
+<div class="container">
+    <h1>Your Notes</h1>
+    <a href="{{ url_for('note.add_note') }}" class="btn btn-primary">Add Note</a>
+    {% if notes %}
+        <div class="row mt-3">
+            {% for note in notes %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <div class="card h-150">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-family: Arial, Helvetica, sans-serif;">{{ note.title }}</h5>
+                            <p class="card-text mt-5" style="font-family: Arial, Helvetica, sans-serif;">{{ note.content[:100] | safe }}{% if note.content|length > 100 %}...{% endif %}</p>
+                            <a href="{{ url_for('note.view_note', note_id=note.id) }}" class="btn btn-primary mt-3">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No notes found.</p>
+    {% endif %}
+</div>
+
+{% if current_user.is_authenticated%}
+        <div class="plus-button-container">
+            <a href="{{ url_for('note.add_note') }}" class="btn plus-button plus-button1"><i class="bi bi-plus-lg"></i></a>
+        </div>
+        {% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const headers = document.querySelectorAll('.accordion-header');
+        headers.forEach(header => {
+            header.addEventListener('click', function() {
+                const body = this.nextElementSibling;
+                const isOpen = body.style.display === 'block';
+                body.style.display = isOpen ? 'none' : 'block';
+            });
+        });
+
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.classList.remove('animate__bounceIn');
+                alert.classList.add('animate__backOutLeft');
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 1000);
+            }, 4500);
+        });
+    });
+</script>
+
+{% endblock %}

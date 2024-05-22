@@ -27,3 +27,16 @@ class Todo(db.Model):
     created_at = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     due_date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+# Notes Model
+class Note(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    content = db.Column(db.Text,nullable=False)
+    created_at = db.Column(db.DateTime,default=datetime.utcnow)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    
+    user = db.relationship('User', backref=db.backref('notes', lazy=True))
+    
+    def __repr__(self):
+        return f"<Note (self.id)>"

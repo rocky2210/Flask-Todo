@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Note</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Note #{{ note.id }}</h5>
+            <!-- {% autoescape false %} -->
+            <p class="card-text" style="font-family: Arial, Helvetica, sans-serif;">{{ note.content | safe }}</p>
+            <!-- {% endautoescape %} -->
+            <a href="{{ url_for('note.notes') }}" class="btn btn-secondary">Back to Notes</a>
+            <a href="{{ url_for('note.edit_note', note_id=note.id) }}" class="btn btn-warning">Edit</a>
+            <form method="POST" action="{{ url_for('note.delete_note', note_id=note.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

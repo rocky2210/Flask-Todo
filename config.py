@@ -10,3 +10,5 @@ class Config:
     
     # Secret kwy for CSRF Protection and session management 
     SECRET_KEY = os.environ.get('SECRET_KEY') or  "Thisismysecretkey"
+    
+    CKEDITOR_PKG_TYPE = 'standard'

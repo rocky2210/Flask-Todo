@@ -69,6 +69,7 @@ def edit_todo(todo_id):
     if not todo:
         flash('Todo not found', 'error')
         return redirect(url_for('main.todo'))
+    
     form = EditTodoForm(obj=todo)
     if form.validate_on_submit():
         todo.title = form.title.data

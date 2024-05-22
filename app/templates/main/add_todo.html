@@ -2,18 +2,6 @@
 
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-    {% if 'delete' in message %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {% elif 'update' in message %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {% else %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {% endif %}
-        <strong>{{ message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% endfor %}
 
     <div class="container d-flex justify-content-center align-items-center">
         <div>
@@ -68,5 +56,5 @@
             }
     </script>
             
-            {% endblock %}
+{% endblock %}
 

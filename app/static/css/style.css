@@ -100,6 +100,10 @@ html {
   text-align: center;
 }
 
+.plus-button1{
+  background-color: #f26a10 !important;
+
+}
 
 .accordion {
   width: 70%;
